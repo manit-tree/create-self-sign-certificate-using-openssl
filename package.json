@@ -1,0 +1,13 @@
+{
+  "name": "89",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "create-cert":"openssl req -config openssl.cnf -x509 -newkey rsa:4096 -keyout your.key -out your.cert -days 9999 -nodes -subj /CN=127.0.0.1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
