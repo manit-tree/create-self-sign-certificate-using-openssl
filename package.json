@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "create-cert":"openssl req -config openssl.cnf -x509 -newkey rsa:4096 -keyout your.key -out your.cert -days 9999 -nodes -subj /CN=127.0.0.1",
+    "create-ca":"openssl req -x509 -sha256 -days 9999 -nodes -newkey rsa:2048 -subj \"/CN=MobiSoft/C=US/L=San Fransisco\" -keyout ./dist/rootCA.key -out ./dist/rootCA.crt -config openssl.cnf",
+    "create-csr":"openssl genrsa -out ./dist/server.key 2048 && openssl req -new -key ./dist/server.key -out ./dist/server.csr -config csr.conf",
+    "create-cert":"openssl x509 -req -in ./dist/server.csr -CA ./dist/rootCA.crt -CAkey ./dist/rootCA.key -CAcreateserial -out ./dist/server.crt -days 9999 -sha256 -extfile cert.conf",
+    "build":"npm run create-ca && npm run create-csr && npm run create-cert && cd ./dist && del rootCA.key && del *.srl && del *.csr && cd..",
+    "clean": "cd ./dist && del rootCA.* && del server.* && cd..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
